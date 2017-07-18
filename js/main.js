@@ -90,9 +90,10 @@
     this.bouncingSpeed = 0.03;
   };
 
+  /* 可以通过 GUI 界面控制弹跳
   var gui = new dat.GUI();
   gui.add(controls, 'rotationSpeed', 0, 0.5);
-  gui.add(controls, 'bouncingSpeed', 0, 0.5);
+  gui.add(controls, 'bouncingSpeed', 0, 0.5);*/
 
   var step = 0;
   var animate = function() {
