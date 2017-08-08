@@ -25,12 +25,12 @@
   scene.add(axes);
   //设置地面
   var plane = function() {
-    this.planeGeo = new THREE.PlaneGeometry(60, 20);
+    this.planeGeo = new THREE.PlaneGeometry(60, 30);  //长，宽
     this.planeMat = new THREE.MeshLambertMaterial({ color: 0xcccccc });
     this.plane = new THREE.Mesh(this.planeGeo, this.planeMat);
     this.plane.receiveShadow = true;
     this.plane.rotation.x = -0.5 * Math.PI;
-    this.plane.position.set(15, 0, 0);
+    this.plane.position.set(15, 0, 0); // x,y,z
     return this.plane;
   };
   //设置地面角度方便查看
@@ -88,11 +88,13 @@
   var controls = new function() {
     this.rotationSpeed = 0.02;
     this.bouncingSpeed = 0.03;
+    this.width = 0.2;
   };
 
   /* 可以通过 GUI 界面控制*/
   var gui = new dat.GUI();
   gui.add(controls, 'rotationSpeed', 0, 0.5);
+  gui.add(controls, 'width', 0, 0.5);
   gui.add(controls, 'bouncingSpeed', 0, 0.5);
 
   var step = 0;
@@ -105,6 +107,7 @@
     step += 0.05;
     this.sphere.position.x = 20 + (10 * (Math.cos(step)));
     this.sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)));
+    this.sphere.position.x = controls.width;
     renderer.render(scene, this.camera);
   };
 
