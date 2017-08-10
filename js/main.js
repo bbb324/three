@@ -1,5 +1,6 @@
 (function() {
   var scene = new THREE.Scene();
+  var canvas = document.getElementById('canvas')
   var camera = function() {
     let view_angle = 45,
       aspect = window.innerWidth / window.innerHeight,
@@ -15,18 +16,26 @@
   this.camera = new camera();
   this.camera.position.set(-30, 40, 30);
   this.camera.lookAt(scene.position);
-  var renderer = new THREE.WebGLRenderer();
+  var renderer = new THREE.WebGLRenderer({canvas: canvas});
   renderer.setClearColor(new THREE.Color(0xEEEEEE));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMapEnabled = true; //能够显示阴影，但是对应的物体也要设置 castShadow = true
   document.body.appendChild(renderer.domElement);
-  // show x,y axes
+  // show x,y axes 显示坐标轴
   var axes = new THREE.AxisHelper(20);
+  //scene.fog = new THREE.Fog('red', 0.01, 200);
   scene.add(axes);
+
+  //设置背景 需要从网络加载，本地加载会报跨域的错误
+  THREE.ImageUtils.crossOrigin = '';
+  var img = 'http://bpic.588ku.com/back_pic/03/92/40/4957e29f80d8a4a.jpg!ww650';
+  var grass = THREE.ImageUtils.loadTexture(img);
+
+
   //设置地面
   var plane = function() {
     this.planeGeo = new THREE.PlaneGeometry(60, 30);  //长，宽
-    this.planeMat = new THREE.MeshLambertMaterial({ color: 0xcccccc });
+    this.planeMat = new THREE.MeshLambertMaterial({  map: grass });
     this.plane = new THREE.Mesh(this.planeGeo, this.planeMat);
     this.plane.receiveShadow = true;
     this.plane.rotation.x = -0.5 * Math.PI;
